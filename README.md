@@ -115,27 +115,11 @@ This project is configured to run in Docker containers, eliminating the need for
 git clone https://github.com/your-username/crypto_wallet_tool.git
 cd crypto_wallet_tool
 
-# Setup Docker environment
-./scripts/docker-setup.sh
+# Build the Docker environment
+docker-compose build
 ```
 
-#### Available Docker Commands
-
-```bash
-# Run tests
-./scripts/docker-test.sh
-
-# Open Ruby console
-./scripts/docker-console.sh
-
-# Open shell in container
-./scripts/docker-shell.sh
-
-# Build the gem
-./scripts/docker-build.sh
-```
-
-#### Manual Docker Commands
+#### Docker Commands
 
 ```bash
 # Build the image
@@ -177,7 +161,7 @@ bundle exec rake build
 To release a new version:
 
 1. Update the version number in `version.rb`
-2. Run `./scripts/docker-build.sh` to build the gem
+2. Run `docker-compose run --rm build` to build the gem
 3. Run `bundle exec rake release` to create a git tag and push to [rubygems.org](https://rubygems.org)
 
 ## Testing
@@ -186,9 +170,6 @@ To release a new version:
 
 ```bash
 # Run all tests
-./scripts/docker-test.sh
-
-# Or manually
 docker-compose run --rm test
 ```
 
