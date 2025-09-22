@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: crypto_wallet_tool_app
+    volumes:
+      - .:/app
+      - /app/tmp
+      - /app/log
+    working_dir: /app
+    environment:
+      - BUNDLE_PATH=/app/vendor/bundle
+    command: tail -f /dev/null
+    stdin_open: true
+    tty: true
+
+  test:
+    build: .
+    container_name: crypto_wallet_tool_test
+    volumes:
+      - .:/app
+    working_dir: /app
+    environment:
+      - BUNDLE_PATH=/app/vendor/bundle
+    command: bundle exec rspec
+    depends_on:
+      - app
+
+  console:
+    build: .
+    container_name: crypto_wallet_tool_console
+    volumes:
+      - .:/app
+    working_dir: /app
+    environment:
+      - BUNDLE_PATH=/app/vendor/bundle
+    command: bundle exec irb
+    stdin_open: true
+    tty: true
+    depends_on:
+      - app
+
+  build:
+    build: .
+    container_name: crypto_wallet_tool_build
+    volumes:
+      - .:/app
+    working_dir: /app
+    environment:
+      - BUNDLE_PATH=/app/vendor/bundle
+    command: bundle exec rake build
+    depends_on:
+      - app
