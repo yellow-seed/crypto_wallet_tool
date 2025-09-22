@@ -11,12 +11,16 @@ RUN apk add --no-cache \
     bash \
     curl
 
-# Copy Gemfile and Gemfile.lock
-COPY Gemfile Gemfile.lock ./
+# Copy Gemfile, Gemfile.lock and gemspec
+COPY Gemfile Gemfile.lock *.gemspec ./
+
+# Copy lib directory for gemspec
+COPY lib/ lib/
 
 # Install gems
 RUN bundle config --global frozen 1 && \
-    bundle install --without development test
+    bundle config --global path /usr/local/bundle && \
+    bundle install
 
 # Copy the rest of the application
 COPY . .

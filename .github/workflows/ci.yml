@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.2
+        bundler-cache: true
+    
+    - name: Run RuboCop
+      run: bundle exec rubocop
+    
+    - name: Run RSpec
+      run: bundle exec rspec
+
+  docker-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Build Docker image
+      run: docker build -t crypto_wallet_tool .
+    
+    - name: Run tests in Docker
+      run: |
+        docker run --rm crypto_wallet_tool bundle exec rspec
+        docker run --rm crypto_wallet_tool bundle exec rubocop
