@@ -7,8 +7,7 @@ RSpec.describe CryptoWalletTool do
     expect(CryptoWalletTool::VERSION).not_to be_nil
   end
 
-  it 'does something useful' do
-    # TODO: Add actual test implementation
-    expect(true).to be(true)
+  it 'has a valid version format' do
+    expect(CryptoWalletTool::VERSION).to match(/\A\d+\.\d+\.\d+\z/)
   end
 end

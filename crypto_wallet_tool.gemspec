@@ -9,10 +9,11 @@ Gem::Specification.new do |spec|
   spec.email = ['your.email@example.com']
 
   spec.summary = 'A simple Ruby gem for input transformation and conversion'
-  spec.description = 'CryptoWalletTool provides various input transformation utilities for text processing and data conversion.'
+  spec.description = 'CryptoWalletTool provides various input transformation utilities for ' \
+                     'text processing and data conversion.'
   spec.homepage = 'https://github.com/your-username/crypto_wallet_tool'
   spec.license = 'MIT'
-  spec.required_ruby_version = '>= 3.0.0'
+  spec.required_ruby_version = '>= 3.2.0'
 
   spec.metadata['allowed_push_host'] = 'https://rubygems.org'
   spec.metadata['homepage_uri'] = spec.homepage
