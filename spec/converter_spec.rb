@@ -103,7 +103,7 @@ RSpec.describe CryptoWalletTool::Converter do
 
   describe '.to_char_array' do
     it 'converts string to array of characters' do
-      expect(described_class.to_char_array('hello')).to eq(['h', 'e', 'l', 'l', 'o'])
+      expect(described_class.to_char_array('hello')).to eq(%w[h e l l o])
     end
 
     it 'handles empty string' do
@@ -117,7 +117,7 @@ RSpec.describe CryptoWalletTool::Converter do
 
   describe '.array_to_string' do
     it 'converts array to string' do
-      expect(described_class.array_to_string(['h', 'e', 'l', 'l', 'o'])).to eq('hello')
+      expect(described_class.array_to_string(%w[h e l l o])).to eq('hello')
     end
 
     it 'handles empty array' do
@@ -131,12 +131,12 @@ RSpec.describe CryptoWalletTool::Converter do
 
   describe '.transform' do
     it 'applies multiple transformations in sequence' do
-      result = described_class.transform('hello world', [:to_uppercase, :reverse])
+      result = described_class.transform('hello world', %i[to_uppercase reverse])
       expect(result).to eq('DLROW OLLEH')
     end
 
     it 'applies snake_case and remove_whitespace' do
-      result = described_class.transform('HelloWorld', [:to_snake_case, :remove_whitespace])
+      result = described_class.transform('HelloWorld', %i[to_snake_case remove_whitespace])
       expect(result).to eq('helloworld')
     end
 
