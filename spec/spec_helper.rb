@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "bundler/setup"
-require "crypto_wallet_tool"
+require 'bundler/setup'
+require 'crypto_wallet_tool'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
