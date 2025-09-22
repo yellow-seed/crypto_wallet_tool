@@ -11,12 +11,16 @@ RUN apk add --no-cache \
     bash \
     curl
 
-# Copy Gemfile and Gemfile.lock
-COPY Gemfile Gemfile.lock ./
+# Copy only the version file first (needed by gemspec)
+COPY lib/crypto_wallet_tool/version.rb lib/crypto_wallet_tool/
+
+# Copy Gemfile, Gemfile.lock and gemspec
+COPY Gemfile Gemfile.lock *.gemspec ./
 
 # Install gems
 RUN bundle config --global frozen 1 && \
-    bundle install --without development test
+    bundle config --global path /usr/local/bundle && \
+    bundle install --jobs 4 --retry 3
 
 # Copy the rest of the application
 COPY . .

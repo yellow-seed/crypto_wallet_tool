@@ -52,3 +52,15 @@ services:
     command: bundle exec rake build
     depends_on:
       - app
+
+  lint:
+    build: .
+    container_name: crypto_wallet_tool_lint
+    volumes:
+      - .:/app
+    working_dir: /app
+    environment:
+      - BUNDLE_PATH=/usr/local/bundle
+    command: sh -c "bundle install && bundle exec rubocop"
+    depends_on:
+      - app
