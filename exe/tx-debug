@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'bundler/setup'
+require 'transaction_debugger'
+require 'thor'
+
+module TransactionDebugger
+  # CLI for Transaction Debugger
+  class CLI < Thor
+    desc 'analyze TX_HASH', 'Analyze a transaction by its hash'
+    def analyze(tx_hash)
+      result = TransactionDebugger.analyze(tx_hash)
+      puts "Analysis for #{tx_hash}:"
+      puts result.inspect
+    end
+
+    desc 'version', 'Show version'
+    def version
+      puts "Transaction Debugger v#{TransactionDebugger::VERSION}"
+    end
+  end
+end
+
+TransactionDebugger::CLI.start(ARGV)
