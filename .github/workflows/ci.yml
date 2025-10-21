@@ -7,7 +7,8 @@ on:
     branches: [ main, develop ]
 
 jobs:
-  test:
+  lint:
+    name: RuboCop
     runs-on: ubuntu-latest
     
     steps:
@@ -20,7 +21,20 @@ jobs:
         bundler-cache: true
     
     - name: Run RuboCop
-      run: bundle exec rubocop
+      run: bundle exec rubocop --parallel
+
+  test:
+    name: RSpec
+    runs-on: ubuntu-latest
     
-    # - name: Run RSpec
-    #   run: bundle exec rspec
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.2
+        bundler-cache: true
+    
+    - name: Run RSpec
+      run: bundle exec rspec --format documentation

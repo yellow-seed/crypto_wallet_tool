@@ -4,24 +4,24 @@ require 'spec_helper'
 
 RSpec.describe TransactionDebugger do
   it 'has a version number' do
-    expect(TransactionDebugger::VERSION).not_to be nil
+    expect(TransactionDebugger::VERSION).not_to be_nil
   end
 
   describe '.configure' do
     it 'allows configuration' do
-      TransactionDebugger.configure do |config|
+      described_class.configure do |config|
         config.rpc_url = 'https://test.rpc.url'
         config.chain_id = 5
       end
 
-      expect(TransactionDebugger.configuration.rpc_url).to eq('https://test.rpc.url')
-      expect(TransactionDebugger.configuration.chain_id).to eq(5)
+      expect(described_class.configuration.rpc_url).to eq('https://test.rpc.url')
+      expect(described_class.configuration.chain_id).to eq(5)
     end
   end
 
   describe '.analyze' do
     it 'analyzes a transaction' do
-      result = TransactionDebugger.analyze('0x1234567890abcdef')
+      result = described_class.analyze('0x1234567890abcdef')
       expect(result).to be_a(Hash)
       expect(result[:tx_hash]).to eq('0x1234567890abcdef')
     end
@@ -29,18 +29,18 @@ RSpec.describe TransactionDebugger do
 
   describe TransactionDebugger::Configuration do
     it 'has default rpc_url' do
-      config = TransactionDebugger::Configuration.new
+      config = described_class.new
       expect(config.rpc_url).to eq('https://mainnet.infura.io/v3/')
     end
 
     it 'has default chain_id' do
-      config = TransactionDebugger::Configuration.new
+      config = described_class.new
       expect(config.chain_id).to eq(1)
     end
 
     it 'reads rpc_url from environment variable' do
       ENV['ETHEREUM_RPC_URL'] = 'https://custom.rpc.url'
-      config = TransactionDebugger::Configuration.new
+      config = described_class.new
       expect(config.rpc_url).to eq('https://custom.rpc.url')
       ENV.delete('ETHEREUM_RPC_URL')
     end
@@ -53,13 +53,13 @@ RSpec.describe TransactionDebugger do
         config.chain_id = 5
       end
 
-      client = TransactionDebugger::Client.new
+      client = described_class.new
       expect(client.rpc_url).to eq('https://test.rpc.url')
       expect(client.chain_id).to eq(5)
     end
 
     it 'can override configuration' do
-      client = TransactionDebugger::Client.new(rpc_url: 'https://override.url', chain_id: 10)
+      client = described_class.new(rpc_url: 'https://override.url', chain_id: 10)
       expect(client.rpc_url).to eq('https://override.url')
       expect(client.chain_id).to eq(10)
     end
@@ -67,7 +67,7 @@ RSpec.describe TransactionDebugger do
 
   describe TransactionDebugger::Analyzer do
     it 'analyzes a transaction' do
-      analyzer = TransactionDebugger::Analyzer.new
+      analyzer = described_class.new
       result = analyzer.analyze('0xabc123')
       expect(result).to be_a(Hash)
       expect(result[:tx_hash]).to eq('0xabc123')

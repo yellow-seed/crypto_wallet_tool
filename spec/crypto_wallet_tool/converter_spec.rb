@@ -93,7 +93,7 @@ RSpec.describe CryptoWalletTool::Converter do
     end
 
     it 'removes tabs and newlines' do
-      expect(described_class.remove_whitespace('hello\tworld\n')).to eq('helloworld')
+      expect(described_class.remove_whitespace("hello\tworld\n")).to eq('helloworld')
     end
 
     it 'raises error for non-string input' do
@@ -137,7 +137,7 @@ RSpec.describe CryptoWalletTool::Converter do
 
     it 'applies snake_case and remove_whitespace' do
       result = described_class.transform('HelloWorld', %i[to_snake_case remove_whitespace])
-      expect(result).to eq('helloworld')
+      expect(result).to eq('hello_world')
     end
 
     it 'raises error for non-string input' do
@@ -145,7 +145,7 @@ RSpec.describe CryptoWalletTool::Converter do
     end
 
     it 'raises error for non-array transformations' do
-      expect { described_class.transform('hello', :to_uppercase) }.to raise_error(ArgumentError, 'Transformations must be an array')
+      expect { described_class.transform('hello', :to_uppercase) }.to raise_error(ArgumentError, 'Input must be an array')
     end
   end
 end
