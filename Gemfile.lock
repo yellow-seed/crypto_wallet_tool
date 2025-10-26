@@ -3,6 +3,7 @@ PATH
   specs:
     crypto_wallet_tool (0.1.0)
       faraday (~> 2.0)
+      thor (~> 1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -80,6 +81,7 @@ GEM
     rubocop-rspec_rails (2.29.1)
       rubocop (~> 1.61)
     ruby-progressbar (1.13.0)
+    thor (1.4.0)
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.1.0)
