@@ -81,7 +81,7 @@ module CryptoWalletTool
     def self.remove_whitespace(input)
       validate_string_input(input)
 
-      input.gsub(/\s/, '')
+      input.gsub(/\s+/, '')
     end
 
     # Convert string to array of characters

@@ -3,6 +3,11 @@
 require 'spec_helper'
 
 RSpec.describe TransactionDebugger do
+  # Reset configuration between tests to prevent state pollution
+  after do
+    described_class.instance_variable_set(:@configuration, nil)
+  end
+
   it 'has a version number' do
     expect(TransactionDebugger::VERSION).not_to be_nil
   end
@@ -39,10 +44,18 @@ RSpec.describe TransactionDebugger do
     end
 
     it 'reads rpc_url from environment variable' do
-      ENV['ETHEREUM_RPC_URL'] = 'https://custom.rpc.url'
-      config = described_class.new
-      expect(config.rpc_url).to eq('https://custom.rpc.url')
-      ENV.delete('ETHEREUM_RPC_URL')
+      original_value = ENV['ETHEREUM_RPC_URL']
+      begin
+        ENV['ETHEREUM_RPC_URL'] = 'https://custom.rpc.url'
+        config = described_class.new
+        expect(config.rpc_url).to eq('https://custom.rpc.url')
+      ensure
+        if original_value
+          ENV['ETHEREUM_RPC_URL'] = original_value
+        else
+          ENV.delete('ETHEREUM_RPC_URL')
+        end
+      end
     end
   end
 
