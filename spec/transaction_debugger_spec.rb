@@ -44,18 +44,12 @@ RSpec.describe TransactionDebugger do
     end
 
     it 'reads rpc_url from environment variable' do
-      original_value = ENV['ETHEREUM_RPC_URL']
-      begin
-        ENV['ETHEREUM_RPC_URL'] = 'https://custom.rpc.url'
-        config = described_class.new
-        expect(config.rpc_url).to eq('https://custom.rpc.url')
-      ensure
-        if original_value
-          ENV['ETHEREUM_RPC_URL'] = original_value
-        else
-          ENV.delete('ETHEREUM_RPC_URL')
-        end
-      end
+      original_value = ENV.fetch('ETHEREUM_RPC_URL', nil)
+      ENV['ETHEREUM_RPC_URL'] = 'https://custom.rpc.url'
+      config = described_class.new
+      expect(config.rpc_url).to eq('https://custom.rpc.url')
+    ensure
+      original_value ? ENV['ETHEREUM_RPC_URL'] = original_value : ENV.delete('ETHEREUM_RPC_URL')
     end
   end
 
