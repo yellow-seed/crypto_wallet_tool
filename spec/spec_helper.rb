@@ -2,6 +2,7 @@
 
 require 'bundler/setup'
 require 'crypto_wallet_tool'
+require 'transaction_debugger'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
