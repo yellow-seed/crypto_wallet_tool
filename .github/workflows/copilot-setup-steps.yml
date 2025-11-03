@@ -1,0 +1,33 @@
+name: Copilot Setup Steps
+
+on:
+  workflow_dispatch:
+
+jobs:
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.2
+        bundler-cache: true
+
+    - name: Install dependencies
+      run: bundle install
+
+    - name: Display Ruby version
+      run: ruby --version
+
+    - name: Display Bundler version
+      run: bundle --version
+
+    - name: List installed gems
+      run: bundle list
+
+    - name: Setup complete
+      run: echo "Development environment setup complete for GitHub Copilot"

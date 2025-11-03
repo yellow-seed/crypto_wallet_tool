@@ -10,6 +10,7 @@ AllCops:
     - 'log/**/*'
     - 'coverage/**/*'
     - 'spec/dummy/**/*'
+    - 'bin/**/*'
 
 # Style
 Style/Documentation:
