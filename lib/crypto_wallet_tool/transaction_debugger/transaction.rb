@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
+require_relative 'utils'
+
 module CryptoWalletTool
   module TransactionDebugger
     # Represents a transaction from the Ethereum blockchain
     class Transaction
+      include Utils
+
       attr_reader :raw_data
 
       def initialize(raw_data)
@@ -36,14 +40,6 @@ module CryptoWalletTool
 
       def eip1559?
         !raw_data['maxFeePerGas'].nil?
-      end
-
-      private
-
-      def hex_to_int(hex_string)
-        return nil if hex_string.nil?
-
-        hex_string.to_i(16)
       end
     end
   end

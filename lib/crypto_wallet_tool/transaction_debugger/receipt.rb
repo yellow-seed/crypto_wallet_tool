@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
+require_relative 'utils'
+
 module CryptoWalletTool
   module TransactionDebugger
     # Represents a transaction receipt from the Ethereum blockchain
     class Receipt
+      include Utils
+
       attr_reader :raw_data
 
       def initialize(raw_data)
@@ -36,14 +40,6 @@ module CryptoWalletTool
 
       def gas_used
         hex_to_int(raw_data['gasUsed'])
-      end
-
-      private
-
-      def hex_to_int(hex_string)
-        return nil if hex_string.nil?
-
-        hex_string.to_i(16)
       end
     end
   end

@@ -11,16 +11,27 @@ RSpec.describe CryptoWalletTool::TransactionDebugger::Fetcher do
     context 'when client is provided' do
       it 'uses the provided client' do
         fetcher = described_class.new(client: client)
-        expect(fetcher.instance_variable_get(:@client)).to eq(client)
+        # Test behavior: the provided client should be used for RPC calls
+        receipt_data = { 'transactionHash' => tx_hash, 'status' => '0x1' }
+        stub_rpc_request('eth_getTransactionReceipt', [tx_hash], receipt_data)
+        result = fetcher.fetch_receipt(tx_hash)
+        expect(result.transaction_hash).to eq(tx_hash)
       end
     end
 
     context 'when client is not provided' do
       it 'creates a new client with default URL' do
         fetcher = described_class.new
-        default_client = fetcher.instance_variable_get(:@client)
-        expect(default_client).to be_a(CryptoWalletTool::Client)
-        expect(default_client.url).to eq('http://localhost:8545')
+        # Test behavior: fetcher should work with default client
+        receipt_data = { 'transactionHash' => tx_hash, 'status' => '0x1' }
+        stub_request(:post, 'http://localhost:8545')
+          .to_return(
+            status: 200,
+            body: { jsonrpc: '2.0', id: 1, result: receipt_data }.to_json,
+            headers: { 'Content-Type' => 'application/json' }
+          )
+        result = fetcher.fetch_receipt(tx_hash)
+        expect(result.transaction_hash).to eq(tx_hash)
       end
     end
   end
