@@ -11,6 +11,9 @@
 /test/version_tmp/
 /tmp/
 
+# RSpec status file
+.rspec_status
+
 # Used by dotenv library to load environment variables.
 # .env
 
