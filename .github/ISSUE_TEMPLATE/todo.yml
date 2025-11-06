@@ -1,0 +1,74 @@
+name: TODO・タスク
+description: 今後の課題やタスクを記録する
+title: "[TODO] "
+labels: ["todo"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        TODO・タスクを作成していただきありがとうございます。
+        以下のフォームに必要な情報を記入してください。
+
+  - type: textarea
+    id: overview
+    attributes:
+      label: 概要
+      description: タスクや課題の内容を説明してください。
+      placeholder: ...を実装する必要があります
+    validations:
+      required: true
+
+  - type: textarea
+    id: purpose
+    attributes:
+      label: 目的
+      description: なぜこのタスクが必要なのかを説明してください。
+      placeholder: ...のため、...を実現するため
+    validations:
+      required: false
+
+  - type: textarea
+    id: tasks
+    attributes:
+      label: 実装内容・タスク
+      description: 実装すべき内容やタスクをチェックリスト形式で記載してください。
+      placeholder: |
+        - [ ] タスク1を実装
+        - [ ] タスク2を実装
+        - [ ] ドキュメントを更新
+      value: |
+        - [ ] 
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 優先度
+      description: このタスクの優先度を選択してください。
+      options:
+        - 高（High）
+        - 中（Medium）
+        - 低（Low）
+    validations:
+      required: false
+
+  - type: textarea
+    id: references
+    attributes:
+      label: 参考情報
+      description: 参考となるリソース、リンク、関連するIssueやPRなどがあれば記載してください。
+      placeholder: |
+        - 関連Issue: #123
+        - 参考URL: https://example.com
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: 追加情報
+      description: その他、このタスクに関連する情報があれば記載してください。
+      placeholder: 補足説明、注意点など
+    validations:
+      required: false
