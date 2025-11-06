@@ -36,8 +36,6 @@ body:
         - [ ] タスク1を実装
         - [ ] タスク2を実装
         - [ ] ドキュメントを更新
-      value: |
-        - [ ] 
     validations:
       required: false
 
