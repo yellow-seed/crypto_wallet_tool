@@ -9,3 +9,7 @@ end
 
 require_relative 'crypto_wallet_tool/converter'
 require_relative 'crypto_wallet_tool/client'
+require_relative 'crypto_wallet_tool/transaction_debugger/utils'
+require_relative 'crypto_wallet_tool/transaction_debugger/receipt'
+require_relative 'crypto_wallet_tool/transaction_debugger/transaction'
+require_relative 'crypto_wallet_tool/transaction_debugger/fetcher'

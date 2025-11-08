@@ -163,6 +163,22 @@ Configurable retry attempts and delays. Defaults to 3 retries with
 4. Consider adding runnable examples in `examples/`
 5. Ensure code comments are up-to-date
 
+### Adding New Public Methods
+When adding new public methods or classes to the gem, you must also update the API documentation:
+
+1. Add the method implementation with proper YARD documentation
+2. Add comprehensive tests for the new method
+3. **Update `docs/API.md`** with:
+   - Method signature and description
+   - Parameter documentation
+   - Return value documentation
+   - Usage examples in Japanese
+   - Error handling examples if applicable
+4. Keep API.md organized by module/class hierarchy
+5. Ensure examples are practical and easy to understand
+
+The API.md file serves as the primary reference for gem users to discover and understand available methods. Keeping it up-to-date is essential for good user experience.
+
 ## Testing Strategies
 
 ### Unit Testing
