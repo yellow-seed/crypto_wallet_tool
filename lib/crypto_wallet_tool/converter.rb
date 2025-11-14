@@ -76,12 +76,14 @@ module CryptoWalletTool
     end
 
     # Remove all whitespace from input
+    # Treats underscores as whitespace to support chained transformations
+    # (e.g., to_snake_case followed by remove_whitespace)
     # @param input [String] The input text to process
-    # @return [String] The text with all whitespace removed
+    # @return [String] The text with all whitespace and underscores removed
     def self.remove_whitespace(input)
       validate_string_input(input)
 
-      input.gsub(/\s+/, '')
+      input.gsub(/[\s_]+/, '')
     end
 
     # Convert string to array of characters

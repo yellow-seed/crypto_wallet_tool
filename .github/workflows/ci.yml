@@ -1,10 +1,6 @@
 name: CI
 
-on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main, develop ]
+on: push
 
 jobs:
   test:
@@ -22,5 +18,5 @@ jobs:
     - name: Run RuboCop
       run: bundle exec rubocop
     
-    # - name: Run RSpec
-    #   run: bundle exec rspec
+    - name: Run RSpec
+      run: bundle exec rspec
