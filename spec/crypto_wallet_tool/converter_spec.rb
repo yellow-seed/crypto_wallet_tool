@@ -93,7 +93,7 @@ RSpec.describe CryptoWalletTool::Converter do
     end
 
     it 'removes tabs and newlines' do
-      expect(described_class.remove_whitespace('hello\tworld\n')).to eq('helloworld')
+      expect(described_class.remove_whitespace("hello\tworld\n")).to eq('helloworld')
     end
 
     it 'removes underscores to support chained transformations' do
