@@ -96,6 +96,10 @@ RSpec.describe CryptoWalletTool::Converter do
       expect(described_class.remove_whitespace('hello\tworld\n')).to eq('helloworld')
     end
 
+    it 'removes underscores to support chained transformations' do
+      expect(described_class.remove_whitespace('hello_world')).to eq('helloworld')
+    end
+
     it 'raises error for non-string input' do
       expect { described_class.remove_whitespace(123) }.to raise_error(ArgumentError, 'Input must be a string')
     end
@@ -145,7 +149,7 @@ RSpec.describe CryptoWalletTool::Converter do
     end
 
     it 'raises error for non-array transformations' do
-      expect { described_class.transform('hello', :to_uppercase) }.to raise_error(ArgumentError, 'Transformations must be an array')
+      expect { described_class.transform('hello', :to_uppercase) }.to raise_error(ArgumentError, 'Input must be an array')
     end
   end
 end
