@@ -2,7 +2,7 @@
 
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version
 ARG RUBY_VERSION=3.2.9
-FROM docker.io/library/ruby:$RUBY_VERSION-slim
+FROM docker.io/library/ruby:$RUBY_VERSION
 
 # Rails app lives here
 WORKDIR /rails
@@ -11,11 +11,9 @@ WORKDIR /rails
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
     build-essential \
-    curl \
     git \
     libpq-dev \
     libvips \
-    libyaml-dev \
     pkg-config \
     postgresql-client && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
@@ -35,7 +33,7 @@ COPY Gemfile.lock /gem/
 COPY examples/rails_app/Gemfile examples/rails_app/Gemfile.lock ./
 
 # Install application gems
-RUN bundle install
+RUN bundle install --jobs 4 --retry 3
 
 # Copy application code
 COPY examples/rails_app .

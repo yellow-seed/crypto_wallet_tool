@@ -16,7 +16,11 @@
 - Docker
 - Docker Compose (v2.0+)
 
+**注意**: Docker環境でのビルドには、ネットワーク環境によってはSSL証明書の問題が発生する場合があります。その場合は、ローカル開発環境での実行を推奨します。
+
 ### 起動方法
+
+#### オプション1: Docker Compose（推奨）
 
 1. リポジトリのルートディレクトリから、以下のコマンドを実行してください：
 
@@ -24,6 +28,26 @@
 cd examples/rails_app
 docker compose build
 docker compose up
+```
+
+#### オプション2: ローカル開発環境
+
+Docker環境でSSL証明書の問題が発生する場合は、ローカル環境で実行できます：
+
+```bash
+cd examples/rails_app
+
+# 依存関係のインストール
+bundle install
+
+# データベースのセットアップ（PostgreSQLが必要）
+export DB_HOST=localhost
+export DB_USERNAME=postgres
+export DB_PASSWORD=your_password
+bin/rails db:create db:migrate
+
+# サーバーの起動
+bin/rails server
 ```
 
 2. アプリケーションが起動したら、以下のURLにアクセスできます：
@@ -54,40 +78,62 @@ Health Check APIエンドポイントは、以下の情報を返します：
 
 ## 開発コマンド
 
-### コンテナの起動
+### Dockerを使用する場合
+
+#### コンテナの起動
 
 ```bash
 docker compose up
 ```
 
-### コンテナの停止
+#### コンテナの停止
 
 ```bash
 docker compose down
 ```
 
-### データベースのリセット
+#### データベースのリセット
 
 ```bash
 docker compose run --rm web bin/rails db:reset
 ```
 
-### Railsコンソールの起動
+#### Railsコンソールの起動
 
 ```bash
 docker compose run --rm web bin/rails console
 ```
 
-### シェルへのアクセス
+#### シェルへのアクセス
 
 ```bash
 docker compose run --rm web bash
 ```
 
-### ログの確認
+#### ログの確認
 
 ```bash
 docker compose logs -f web
+```
+
+### ローカル環境を使用する場合
+
+#### サーバーの起動
+
+```bash
+bin/rails server
+```
+
+#### Railsコンソールの起動
+
+```bash
+bin/rails console
+```
+
+#### データベースのリセット
+
+```bash
+bin/rails db:reset
 ```
 
 ## プロジェクト構造
@@ -119,6 +165,10 @@ transformed = CryptoWalletTool::Converter.to_uppercase(sample_text)
 ```
 
 ## トラブルシューティング
+
+### Docker ビルドでのSSL証明書エラー
+
+Docker環境でのビルド時にSSL証明書の検証エラーが発生する場合は、ネットワーク環境やファイアウォールの問題である可能性があります。この場合は、ローカル開発環境での実行を推奨します。
 
 ### ポートが既に使用されている
 
