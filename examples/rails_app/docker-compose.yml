@@ -4,9 +4,9 @@ services:
   db:
     image: postgres:15-alpine
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: rails_app_development
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${POSTGRES_DB:-rails_app_development}
     ports:
       - "5432:5432"
     volumes:
@@ -35,8 +35,8 @@ services:
     environment:
       DB_HOST: db
       DB_PORT: 5432
-      DB_USERNAME: postgres
-      DB_PASSWORD: password
+      DB_USERNAME: ${POSTGRES_USER:-postgres}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-password}
       RAILS_ENV: development
       CRYPTO_WALLET_TOOL_PATH: /gem
     depends_on:
