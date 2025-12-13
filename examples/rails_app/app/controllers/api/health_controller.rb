@@ -4,7 +4,7 @@ class Api::HealthController < ApplicationController
     begin
       sample_text = "hello world"
       transformed = CryptoWalletTool::Converter.to_uppercase(sample_text)
-      
+
       render json: {
         status: "ok",
         message: "Rails app is running with crypto_wallet_tool gem",
