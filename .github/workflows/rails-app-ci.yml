@@ -27,10 +27,7 @@ jobs:
         with:
           ruby-version-file: examples/rails_app/.ruby-version
           bundler-cache: true
-          cache-version: 1
-
-      - name: Install dependencies
-        run: bundle install
+          working-directory: examples/rails_app
 
       - name: Scan for security vulnerabilities
         run: bin/brakeman --no-pager
@@ -50,10 +47,7 @@ jobs:
         with:
           ruby-version-file: examples/rails_app/.ruby-version
           bundler-cache: true
-          cache-version: 1
-
-      - name: Install dependencies
-        run: bundle install
+          working-directory: examples/rails_app
 
       - name: Lint code for consistent style
         run: bin/rubocop -f github
@@ -73,10 +67,7 @@ jobs:
         with:
           ruby-version-file: examples/rails_app/.ruby-version
           bundler-cache: true
-          cache-version: 1
-
-      - name: Install dependencies
-        run: bundle install
+          working-directory: examples/rails_app
 
       - name: Verify routes are configured
         run: bin/rails routes | grep health
