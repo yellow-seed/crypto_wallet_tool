@@ -4,7 +4,7 @@
 
 ## 概要
 
-- **Rails**: 7.2+ (APIモード)
+- **Rails**: 8.0+ (APIモード)
 - **Ruby**: 3.2.9
 - **Database**: PostgreSQL 15
 - **Environment**: Docker & Docker Compose
