@@ -64,7 +64,7 @@ Lint/UnusedMethodArgument:
   AllowUnusedKeywordArguments: true
 
 # RSpec
-require:
+plugins:
   - rubocop-rspec
 
 RSpec/ExampleLength:
@@ -78,71 +78,4 @@ RSpec/NestedGroups:
 
 # Disable problematic cops that cause errors
 RSpec/PredicateMatcher:
-  Enabled: false
-
-# Disable Capybara/RSpec/PredicateMatcher cop that causes errors
-Capybara/RSpec/PredicateMatcher:
-  Enabled: false
-
-# Disable all Capybara cops to avoid warnings
-Capybara/CurrentPathExpectation:
-  Enabled: false
-
-Capybara/MatchStyle:
-  Enabled: false
-
-Capybara/NegationMatcher:
-  Enabled: false
-
-Capybara/SpecificActions:
-  Enabled: false
-
-Capybara/SpecificFinders:
-  Enabled: false
-
-Capybara/SpecificMatcher:
-  Enabled: false
-
-Capybara/VisibilityMatcher:
-  Enabled: false
-
-# Disable all FactoryBot cops to avoid warnings
-FactoryBot/AttributeDefinedStatically:
-  Enabled: false
-
-FactoryBot/ConsistentParenthesesStyle:
-  Enabled: false
-
-FactoryBot/CreateList:
-  Enabled: false
-
-FactoryBot/FactoryClassName:
-  Enabled: false
-
-FactoryBot/FactoryNameStyle:
-  Enabled: false
-
-FactoryBot/SyntaxMethods:
-  Enabled: false
-
-# Disable all RSpecRails cops to avoid warnings
-RSpecRails/AvoidSetupHook:
-  Enabled: false
-
-RSpecRails/HaveHttpStatus:
-  Enabled: false
-
-RSpecRails/HttpStatus:
-  Enabled: false
-
-RSpecRails/InferredSpecType:
-  Enabled: false
-
-RSpecRails/MinitestAssertions:
-  Enabled: false
-
-RSpecRails/NegationBeValid:
-  Enabled: false
-
-RSpecRails/TravelAround:
   Enabled: false
