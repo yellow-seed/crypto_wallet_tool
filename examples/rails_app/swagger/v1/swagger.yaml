@@ -42,10 +42,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
+                $ref: '#/components/schemas/error'
   "/api/v1/converter/lowercase":
     post:
       summary: Convert text to lowercase
@@ -223,19 +220,13 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
+                $ref: '#/components/schemas/error'
         '503':
           description: RPC endpoint not configured
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
+                $ref: '#/components/schemas/error'
   "/api/v1/ethereum/receipt":
     post:
       summary: Get transaction receipt
@@ -271,10 +262,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
+                $ref: '#/components/schemas/error'
   "/api/v1/ethereum/block_number":
     post:
       summary: Get current block number
@@ -297,10 +285,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
+                $ref: '#/components/schemas/error'
   "/api/v1/ethereum/call":
     post:
       summary: Execute eth_call
@@ -400,19 +385,13 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
+                $ref: '#/components/schemas/error'
         '503':
           description: RPC endpoint not configured
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
+                $ref: '#/components/schemas/error'
   "/api/v1/debug/receipt":
     post:
       summary: Analyze transaction receipt with debugging info
@@ -459,10 +438,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  error:
-                    type: string
+                $ref: '#/components/schemas/error'
 components:
   schemas:
     error:
