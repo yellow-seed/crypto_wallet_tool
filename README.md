@@ -2,6 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/crypto_wallet_tool.svg)](https://badge.fury.io/rb/crypto_wallet_tool)
 [![Build Status](https://github.com/your-username/crypto_wallet_tool/workflows/CI/badge.svg)](https://github.com/your-username/crypto_wallet_tool/actions)
+[![codecov](https://codecov.io/gh/yellow-seed/crypto_wallet_tool/branch/main/graph/badge.svg)](https://codecov.io/gh/yellow-seed/crypto_wallet_tool)
 
 A simple Ruby gem for input transformation and conversion. This gem provides various utility methods for text processing and data conversion.
 
