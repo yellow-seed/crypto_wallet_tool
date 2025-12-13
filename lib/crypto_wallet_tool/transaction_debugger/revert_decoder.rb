@@ -92,7 +92,7 @@ module CryptoWalletTool
 
         @client.eth_call(call_params, receipt.block_number - 1)
         nil
-      rescue RPCError => e
+      rescue CryptoWalletTool::RPCError => e
         extract_revert_from_error(e.message)
       end
 

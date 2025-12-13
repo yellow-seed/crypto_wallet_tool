@@ -149,11 +149,15 @@ RSpec.describe CryptoWalletTool::TransactionDebugger::RevertDecoder do
   end
 
   describe '#decode_from_receipt' do
+    # Block number 0x4b7 (1207 in decimal). When simulating, it uses block_number - 1 = 1206
+    let(:block_number_hex) { '0x4b7' }
+    let(:simulation_block) { 1206 } # 0x4b7 - 1 = 1207 - 1
+
     context 'when receipt is successful' do
       it 'returns nil' do
         receipt_data = {
           'transactionHash' => '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef',
-          'blockNumber' => '0x4b7',
+          'blockNumber' => block_number_hex,
           'status' => '0x1',
           'gasUsed' => '0x5208'
         }
@@ -173,7 +177,7 @@ RSpec.describe CryptoWalletTool::TransactionDebugger::RevertDecoder do
       it 'decodes the revert reason from receipt' do
         receipt_data = {
           'transactionHash' => '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef',
-          'blockNumber' => '0x4b7',
+          'blockNumber' => block_number_hex,
           'status' => '0x0',
           'gasUsed' => '0x5208',
           'revertReason' => revert_reason_data
@@ -183,6 +187,7 @@ RSpec.describe CryptoWalletTool::TransactionDebugger::RevertDecoder do
       end
     end
 
+    # rubocop:disable RSpec/MultipleMemoizedHelpers
     context 'when receipt does not have revertReason and eth_call succeeds' do
       let(:tx_hash) { '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef' }
       let(:transaction) do
@@ -203,7 +208,7 @@ RSpec.describe CryptoWalletTool::TransactionDebugger::RevertDecoder do
             to: '0xto',
             data: '0xdata',
             value: '0x0'
-          }, 1206],
+          }, simulation_block],
           '0x'
         )
       end
@@ -211,7 +216,7 @@ RSpec.describe CryptoWalletTool::TransactionDebugger::RevertDecoder do
       it 'returns nil' do
         receipt_data = {
           'transactionHash' => tx_hash,
-          'blockNumber' => '0x4b7',
+          'blockNumber' => block_number_hex,
           'status' => '0x0',
           'gasUsed' => '0x5208'
         }
@@ -220,7 +225,9 @@ RSpec.describe CryptoWalletTool::TransactionDebugger::RevertDecoder do
         expect(result).to be_nil
       end
     end
+    # rubocop:enable RSpec/MultipleMemoizedHelpers
 
+    # rubocop:disable RSpec/MultipleMemoizedHelpers
     context 'when receipt does not have revertReason and eth_call fails with execution reverted' do
       let(:tx_hash) { '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef' }
       let(:transaction) do
@@ -241,7 +248,7 @@ RSpec.describe CryptoWalletTool::TransactionDebugger::RevertDecoder do
             to: '0xto',
             data: '0xdata',
             value: '0x0'
-          }, 1206],
+          }, simulation_block],
           -32_000,
           'execution reverted: Insufficient funds'
         )
@@ -250,7 +257,7 @@ RSpec.describe CryptoWalletTool::TransactionDebugger::RevertDecoder do
       it 'extracts revert reason from error message' do
         receipt_data = {
           'transactionHash' => tx_hash,
-          'blockNumber' => '0x4b7',
+          'blockNumber' => block_number_hex,
           'status' => '0x0',
           'gasUsed' => '0x5208'
         }
@@ -259,7 +266,9 @@ RSpec.describe CryptoWalletTool::TransactionDebugger::RevertDecoder do
         expect(result).to eq('Insufficient funds')
       end
     end
+    # rubocop:enable RSpec/MultipleMemoizedHelpers
 
+    # rubocop:disable RSpec/MultipleMemoizedHelpers
     context 'when receipt does not have revertReason and eth_call fails with revert' do
       let(:tx_hash) { '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef' }
       let(:transaction) do
@@ -280,7 +289,7 @@ RSpec.describe CryptoWalletTool::TransactionDebugger::RevertDecoder do
             to: '0xto',
             data: '0xdata',
             value: '0x0'
-          }, 1206],
+          }, simulation_block],
           -32_000,
           'revert Custom error message'
         )
@@ -289,7 +298,7 @@ RSpec.describe CryptoWalletTool::TransactionDebugger::RevertDecoder do
       it 'extracts revert reason from error message' do
         receipt_data = {
           'transactionHash' => tx_hash,
-          'blockNumber' => '0x4b7',
+          'blockNumber' => block_number_hex,
           'status' => '0x0',
           'gasUsed' => '0x5208'
         }
@@ -298,7 +307,9 @@ RSpec.describe CryptoWalletTool::TransactionDebugger::RevertDecoder do
         expect(result).to eq('Custom error message')
       end
     end
+    # rubocop:enable RSpec/MultipleMemoizedHelpers
 
+    # rubocop:disable RSpec/MultipleMemoizedHelpers
     context 'when receipt does not have revertReason and eth_call fails with generic error' do
       let(:tx_hash) { '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef' }
       let(:transaction) do
@@ -319,7 +330,7 @@ RSpec.describe CryptoWalletTool::TransactionDebugger::RevertDecoder do
             to: '0xto',
             data: '0xdata',
             value: '0x0'
-          }, 1206],
+          }, simulation_block],
           -32_000,
           'Some generic error'
         )
@@ -328,7 +339,7 @@ RSpec.describe CryptoWalletTool::TransactionDebugger::RevertDecoder do
       it 'returns the full error message' do
         receipt_data = {
           'transactionHash' => tx_hash,
-          'blockNumber' => '0x4b7',
+          'blockNumber' => block_number_hex,
           'status' => '0x0',
           'gasUsed' => '0x5208'
         }
@@ -337,6 +348,7 @@ RSpec.describe CryptoWalletTool::TransactionDebugger::RevertDecoder do
         expect(result).to eq('Some generic error')
       end
     end
+    # rubocop:enable RSpec/MultipleMemoizedHelpers
 
     context 'when client is not provided' do
       let(:decoder) { described_class.new }
@@ -344,7 +356,7 @@ RSpec.describe CryptoWalletTool::TransactionDebugger::RevertDecoder do
       it 'raises ArgumentError' do
         receipt_data = {
           'transactionHash' => '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef',
-          'blockNumber' => '0x4b7',
+          'blockNumber' => block_number_hex,
           'status' => '0x0',
           'gasUsed' => '0x5208'
         }
