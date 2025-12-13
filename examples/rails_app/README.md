@@ -60,8 +60,24 @@ bin/rails server
 
 2. アプリケーションが起動したら、以下のURLにアクセスできます：
 
+- **Swagger UI (API Documentation)**: http://localhost:3000/api-docs
 - Health Check API: http://localhost:3000/api/health
 - Rails Health Check: http://localhost:3000/up
+
+### Swagger UI でAPIを試す
+
+Swagger UIを使用すると、ブラウザから直接APIをテストできます：
+
+1. http://localhost:3000/api-docs にアクセス
+2. 利用可能なAPIエンドポイントが表示されます：
+   - **Converter API**: テキスト変換機能（大文字・小文字・反転など）
+   - **Ethereum API**: Ethereumブロックチェーンとの対話（トランザクション取得、ブロック番号など）
+   - **Transaction Debugger API**: トランザクション分析とデバッグ情報
+3. 各エンドポイントを展開し、「Try it out」ボタンをクリック
+4. パラメータを入力して「Execute」を実行
+5. レスポンスがリアルタイムで表示されます
+
+**注意**: Ethereum APIとTransaction Debugger APIを使用するには、環境変数 `ETHEREUM_RPC_URL` を設定する必要があります（例：Infura、Alchemy、またはローカルノード）。
 
 ### 動作確認
 
@@ -162,6 +178,41 @@ examples/rails_app/
 ```
 
 ## crypto_wallet_tool Gemの使用例
+
+### APIエンドポイント
+
+このRailsアプリケーションは、crypto_wallet_tool gemの機能を公開する複数のAPIエンドポイントを提供します：
+
+#### Converter API (`/api/v1/converter`)
+
+テキスト変換機能：
+
+- `POST /api/v1/converter/uppercase` - テキストを大文字に変換
+- `POST /api/v1/converter/lowercase` - テキストを小文字に変換
+- `POST /api/v1/converter/reverse` - テキストを反転
+- `POST /api/v1/converter/title_case` - タイトルケースに変換
+- `POST /api/v1/converter/snake_case` - スネークケースに変換
+- `POST /api/v1/converter/camel_case` - キャメルケースに変換
+
+#### Ethereum API (`/api/v1/ethereum`)
+
+Ethereumブロックチェーンとの対話：
+
+- `POST /api/v1/ethereum/transaction` - トランザクション情報を取得
+- `POST /api/v1/ethereum/receipt` - トランザクションレシートを取得
+- `POST /api/v1/ethereum/block_number` - 現在のブロック番号を取得
+- `POST /api/v1/ethereum/call` - eth_callを実行（コントラクト読み取り）
+
+#### Transaction Debugger API (`/api/v1/debug`)
+
+トランザクション分析とデバッグ：
+
+- `POST /api/v1/debug/transaction` - トランザクションの詳細分析
+- `POST /api/v1/debug/receipt` - レシートの詳細分析
+
+すべてのエンドポイントの詳細は、Swagger UI (http://localhost:3000/api-docs) で確認できます。
+
+### コード内での使用例
 
 `app/controllers/api/health_controller.rb`で実装例を確認できます：
 
