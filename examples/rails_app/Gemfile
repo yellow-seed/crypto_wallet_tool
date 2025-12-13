@@ -29,6 +29,11 @@ gem "bootsnap", require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 # gem "rack-cors"
 
+# Swagger/OpenAPI documentation
+gem "rswag"
+gem "rswag-api"
+gem "rswag-ui"
+
 # Local crypto_wallet_tool gem for development
 # In Docker, the gem is at /gem, locally it's at ../../
 gem "crypto_wallet_tool", path: ENV.fetch("CRYPTO_WALLET_TOOL_PATH", "../../")
@@ -42,4 +47,10 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+  
+  # RSpec for testing
+  gem "rspec-rails"
+  
+  # Swagger specs for API documentation
+  gem "rswag-specs"
 end

@@ -1,0 +1,474 @@
+---
+openapi: 3.0.1
+info:
+  title: CryptoWalletTool API
+  version: v1
+  description: API documentation for crypto_wallet_tool gem demonstration. This API
+    provides endpoints for Ethereum blockchain interactions, text conversion utilities,
+    and transaction debugging.
+servers:
+- url: http://localhost:3000
+  description: Development server
+paths:
+  "/api/v1/converter/uppercase":
+    post:
+      summary: Convert text to uppercase
+      tags:
+      - Converter
+      parameters:
+      - name: text
+        in: query
+        required: true
+        description: Text to convert to uppercase
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  input:
+                    type: string
+                  output:
+                    type: string
+                required:
+                - input
+                - output
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  "/api/v1/converter/lowercase":
+    post:
+      summary: Convert text to lowercase
+      tags:
+      - Converter
+      parameters:
+      - name: text
+        in: query
+        required: true
+        description: Text to convert to lowercase
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  input:
+                    type: string
+                  output:
+                    type: string
+                required:
+                - input
+                - output
+  "/api/v1/converter/reverse":
+    post:
+      summary: Reverse text
+      tags:
+      - Converter
+      parameters:
+      - name: text
+        in: query
+        required: true
+        description: Text to reverse
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  input:
+                    type: string
+                  output:
+                    type: string
+                required:
+                - input
+                - output
+  "/api/v1/converter/title_case":
+    post:
+      summary: Convert text to title case
+      tags:
+      - Converter
+      parameters:
+      - name: text
+        in: query
+        required: true
+        description: Text to convert to title case
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  input:
+                    type: string
+                  output:
+                    type: string
+                required:
+                - input
+                - output
+  "/api/v1/converter/snake_case":
+    post:
+      summary: Convert text to snake_case
+      tags:
+      - Converter
+      parameters:
+      - name: text
+        in: query
+        required: true
+        description: Text to convert to snake_case
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  input:
+                    type: string
+                  output:
+                    type: string
+                required:
+                - input
+                - output
+  "/api/v1/converter/camel_case":
+    post:
+      summary: Convert text to camelCase
+      tags:
+      - Converter
+      parameters:
+      - name: text
+        in: query
+        required: true
+        description: Text to convert to camelCase
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  input:
+                    type: string
+                  output:
+                    type: string
+                required:
+                - input
+                - output
+  "/api/v1/ethereum/transaction":
+    post:
+      summary: Get transaction by hash
+      tags:
+      - Ethereum
+      parameters:
+      - name: transaction_hash
+        in: query
+        required: true
+        description: Transaction hash (0x-prefixed hex string)
+        schema:
+          type: string
+        example: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef'
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hash:
+                    type: string
+                  from:
+                    type: string
+                  to:
+                    type: string
+                  value:
+                    type: string
+                  gas:
+                    type: string
+                  gasPrice:
+                    type: string
+                  blockNumber:
+                    type: string
+                  blockHash:
+                    type: string
+        '404':
+          description: transaction not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '503':
+          description: RPC endpoint not configured
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  "/api/v1/ethereum/receipt":
+    post:
+      summary: Get transaction receipt
+      tags:
+      - Ethereum
+      parameters:
+      - name: transaction_hash
+        in: query
+        required: true
+        description: Transaction hash (0x-prefixed hex string)
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transactionHash:
+                    type: string
+                  status:
+                    type: string
+                  blockNumber:
+                    type: string
+                  gasUsed:
+                    type: string
+                  logs:
+                    type: array
+        '404':
+          description: transaction not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  "/api/v1/ethereum/block_number":
+    post:
+      summary: Get current block number
+      tags:
+      - Ethereum
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  block_number:
+                    type: integer
+                required:
+                - block_number
+        '503':
+          description: RPC endpoint not configured
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  "/api/v1/ethereum/call":
+    post:
+      summary: Execute eth_call
+      tags:
+      - Ethereum
+      parameters:
+      - name: block
+        in: query
+        required: false
+        description: Block number or tag (latest, earliest, pending)
+        schema:
+          type: string
+          default: latest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                to:
+                  type: string
+                  description: Contract address
+                from:
+                  type: string
+                  description: Sender address (optional)
+                data:
+                  type: string
+                  description: Encoded function call data
+                gas:
+                  type: string
+                  description: Gas limit (optional)
+                gasPrice:
+                  type: string
+                  description: Gas price (optional)
+                value:
+                  type: string
+                  description: Value to send (optional)
+              required:
+              - to
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+  "/api/v1/debug/transaction":
+    post:
+      summary: Analyze transaction with debugging info
+      tags:
+      - Transaction Debugger
+      parameters:
+      - name: transaction_hash
+        in: query
+        required: true
+        description: Transaction hash (0x-prefixed hex string)
+        schema:
+          type: string
+        example: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef'
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hash:
+                    type: string
+                  from:
+                    type: string
+                  to:
+                    type: string
+                  value:
+                    type: integer
+                  gas:
+                    type: integer
+                  gas_price:
+                    type: integer
+                  eip1559:
+                    type: boolean
+                  raw_data:
+                    type: object
+                required:
+                - hash
+                - from
+                - to
+                - value
+                - gas
+                - gas_price
+                - eip1559
+        '404':
+          description: transaction not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '503':
+          description: RPC endpoint not configured
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  "/api/v1/debug/receipt":
+    post:
+      summary: Analyze transaction receipt with debugging info
+      tags:
+      - Transaction Debugger
+      parameters:
+      - name: transaction_hash
+        in: query
+        required: true
+        description: Transaction hash (0x-prefixed hex string)
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_hash:
+                    type: string
+                  status:
+                    type: string
+                  success:
+                    type: boolean
+                  failed:
+                    type: boolean
+                  block_number:
+                    type: integer
+                  gas_used:
+                    type: integer
+                  raw_data:
+                    type: object
+                required:
+                - transaction_hash
+                - status
+                - success
+                - failed
+                - block_number
+                - gas_used
+        '404':
+          description: transaction not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+components:
+  schemas:
+    error:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+      - error
