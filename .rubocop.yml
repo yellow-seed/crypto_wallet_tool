@@ -11,6 +11,7 @@ AllCops:
     - 'coverage/**/*'
     - 'spec/dummy/**/*'
     - 'bin/**/*'
+    - 'examples/**/*'
 
 # Style
 Style/Documentation:
