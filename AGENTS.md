@@ -270,6 +270,53 @@ Refer to `docs/TODO.md` for:
 - Ask for clarification when requirements are unclear
 - Reference specific files and line numbers in discussions
 
+## examples/rails_app Requirements
+
+The `examples/rails_app` directory contains a sample Rails application demonstrating the crypto_wallet_tool gem's API functionality. **All changes to this directory must pass both lint and test validations before work is considered complete.**
+
+### Linting Requirements
+```bash
+cd examples/rails_app
+bundle install
+bundle exec rubocop
+```
+
+**Expected Result**: No offenses detected. All code must conform to the project's RuboCop style guidelines.
+
+### Testing Requirements
+```bash
+cd examples/rails_app
+bundle install
+
+# Tests require PostgreSQL
+export RAILS_ENV=test
+export DATABASE_URL="postgresql://postgres:postgres@localhost:5432/rails_app_test"
+bin/rails db:create db:migrate
+bin/rspec
+```
+
+**Expected Result**: All specs passing. Tests cover:
+- Converter API endpoints (6 endpoints)
+- Ethereum API endpoints (4 endpoints)
+- Debug API endpoints (2 endpoints)
+
+### CI/CD Validation
+The `rails-app-ci.yml` workflow automatically validates:
+1. **security_scan**: Brakeman security checks
+2. **lint**: RuboCop style checks
+3. **routes_check**: Route configuration validation
+4. **test**: RSpec test suite with PostgreSQL
+
+**All jobs must pass** for pull requests affecting the `examples/rails_app/` directory.
+
+### Required Dependencies
+- Ruby 3.2.9 (specified in `.ruby-version`)
+- PostgreSQL 15+ (for tests)
+- All gems in `Gemfile` including:
+  - `rspec-rails` for testing
+  - `rubocop-rspec` for RSpec-specific linting
+  - `rswag` gems for API documentation
+
 ---
 
-Last updated: 2025-11-03
+Last updated: 2025-12-14
