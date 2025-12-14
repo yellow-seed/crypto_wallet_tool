@@ -27,6 +27,8 @@ RSpec.describe 'api/v1/debug', type: :request do
           required: [ "hash", "from", "to", "value", "gas", "gas_price", "eip1559" ]
 
         before do
+          allow(ENV).to receive(:fetch).and_call_original
+          allow(ENV).to receive(:fetch).with('ETHEREUM_RPC_URL', nil).and_return('https://eth.llamarpc.com')
           tx_data = {
             'hash' => transaction_hash,
             'from' => '0xabcd1234',
@@ -56,6 +58,8 @@ RSpec.describe 'api/v1/debug', type: :request do
           }
 
         before do
+          allow(ENV).to receive(:fetch).and_call_original
+          allow(ENV).to receive(:fetch).with('ETHEREUM_RPC_URL', nil).and_return('https://eth.llamarpc.com')
           allow_any_instance_of(CryptoWalletTool::TransactionDebugger::Fetcher)
             .to receive(:fetch_transaction)
             .and_raise(CryptoWalletTool::TransactionNotFoundError, 'Transaction not found')
@@ -73,6 +77,7 @@ RSpec.describe 'api/v1/debug', type: :request do
           }
 
         before do
+          allow(ENV).to receive(:fetch).and_call_original
           allow(ENV).to receive(:fetch).with('ETHEREUM_RPC_URL', nil).and_return(nil)
         end
 
@@ -105,6 +110,8 @@ RSpec.describe 'api/v1/debug', type: :request do
           required: [ "transaction_hash", "status", "success", "failed", "block_number", "gas_used" ]
 
         before do
+          allow(ENV).to receive(:fetch).and_call_original
+          allow(ENV).to receive(:fetch).with('ETHEREUM_RPC_URL', nil).and_return('https://eth.llamarpc.com')
           receipt_data = {
             'transactionHash' => transaction_hash,
             'status' => '0x1',
@@ -126,7 +133,7 @@ RSpec.describe 'api/v1/debug', type: :request do
       end
 
       response(404, 'transaction not found') do
-        let(:transaction_hash) { '0x0000000000000000000000000000000000000000000000000000000000000000' }
+        let(:transaction_hash) { '0x0000000000000000000000000000000000000000000000000000000000000000000000' }
 
         schema type: :object,
           properties: {
@@ -134,6 +141,8 @@ RSpec.describe 'api/v1/debug', type: :request do
           }
 
         before do
+          allow(ENV).to receive(:fetch).and_call_original
+          allow(ENV).to receive(:fetch).with('ETHEREUM_RPC_URL', nil).and_return('https://eth.llamarpc.com')
           allow_any_instance_of(CryptoWalletTool::TransactionDebugger::Fetcher)
             .to receive(:fetch_receipt)
             .and_raise(CryptoWalletTool::TransactionNotFoundError, 'Transaction not found')

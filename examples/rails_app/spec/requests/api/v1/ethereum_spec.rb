@@ -26,6 +26,8 @@ RSpec.describe 'api/v1/ethereum', type: :request do
           }
 
         before do
+          allow(ENV).to receive(:fetch).and_call_original
+          allow(ENV).to receive(:fetch).with('ETHEREUM_RPC_URL', nil).and_return('https://eth.llamarpc.com')
           allow_any_instance_of(CryptoWalletTool::Client).to receive(:eth_get_transaction_by_hash).and_return({
             'hash' => transaction_hash,
             'from' => '0xabcd',
@@ -48,6 +50,8 @@ RSpec.describe 'api/v1/ethereum', type: :request do
           }
 
         before do
+          allow(ENV).to receive(:fetch).and_call_original
+          allow(ENV).to receive(:fetch).with('ETHEREUM_RPC_URL', nil).and_return('https://eth.llamarpc.com')
           allow_any_instance_of(CryptoWalletTool::Client).to receive(:eth_get_transaction_by_hash)
             .and_raise(CryptoWalletTool::TransactionNotFoundError, 'Transaction not found')
         end
@@ -64,6 +68,7 @@ RSpec.describe 'api/v1/ethereum', type: :request do
           }
 
         before do
+          allow(ENV).to receive(:fetch).and_call_original
           allow(ENV).to receive(:fetch).with('ETHEREUM_RPC_URL', nil).and_return(nil)
         end
 
@@ -93,6 +98,8 @@ RSpec.describe 'api/v1/ethereum', type: :request do
           }
 
         before do
+          allow(ENV).to receive(:fetch).and_call_original
+          allow(ENV).to receive(:fetch).with('ETHEREUM_RPC_URL', nil).and_return('https://eth.llamarpc.com')
           allow_any_instance_of(CryptoWalletTool::Client).to receive(:eth_get_transaction_receipt).and_return({
             'transactionHash' => transaction_hash,
             'status' => '0x1',
@@ -114,6 +121,8 @@ RSpec.describe 'api/v1/ethereum', type: :request do
           }
 
         before do
+          allow(ENV).to receive(:fetch).and_call_original
+          allow(ENV).to receive(:fetch).with('ETHEREUM_RPC_URL', nil).and_return('https://eth.llamarpc.com')
           allow_any_instance_of(CryptoWalletTool::Client).to receive(:eth_get_transaction_receipt)
             .and_raise(CryptoWalletTool::TransactionNotFoundError, 'Transaction not found')
         end
@@ -137,6 +146,8 @@ RSpec.describe 'api/v1/ethereum', type: :request do
           required: [ "block_number" ]
 
         before do
+          allow(ENV).to receive(:fetch).and_call_original
+          allow(ENV).to receive(:fetch).with('ETHEREUM_RPC_URL', nil).and_return('https://eth.llamarpc.com')
           allow_any_instance_of(CryptoWalletTool::Client).to receive(:eth_block_number).and_return(12345678)
         end
 
@@ -153,6 +164,7 @@ RSpec.describe 'api/v1/ethereum', type: :request do
           }
 
         before do
+          allow(ENV).to receive(:fetch).and_call_original
           allow(ENV).to receive(:fetch).with('ETHEREUM_RPC_URL', nil).and_return(nil)
         end
 
@@ -192,6 +204,8 @@ RSpec.describe 'api/v1/ethereum', type: :request do
           }
 
         before do
+          allow(ENV).to receive(:fetch).and_call_original
+          allow(ENV).to receive(:fetch).with('ETHEREUM_RPC_URL', nil).and_return('https://eth.llamarpc.com')
           allow_any_instance_of(CryptoWalletTool::Client).to receive(:eth_call).and_return('0x0000000000000000000000000000000000000000000000000000000000000001')
         end
 

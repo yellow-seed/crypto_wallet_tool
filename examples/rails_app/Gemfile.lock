@@ -1,5 +1,5 @@
 PATH
-  remote: ../..
+  remote: /gem
   specs:
     crypto_wallet_tool (0.1.0)
       faraday (~> 2.0)
@@ -344,4 +344,4 @@ DEPENDENCIES
   tzinfo-data
 
 BUNDLED WITH
-   2.5.9
+   2.4.19

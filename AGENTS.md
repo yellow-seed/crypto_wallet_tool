@@ -274,11 +274,24 @@ Refer to `docs/TODO.md` for:
 
 The `examples/rails_app` directory contains a sample Rails application demonstrating the crypto_wallet_tool gem's API functionality. **All changes to this directory must pass both lint and test validations before work is considered complete.**
 
+**Important**: The `examples/rails_app` is designed to run with Docker Compose. All commands should be executed via `docker compose` to ensure consistent environment.
+
+### Docker Compose Setup
+
+The application uses Docker Compose for development and testing. The `docker-compose.yml` defines:
+- **web**: Rails application container
+- **db**: PostgreSQL 15 database container
+
 ### Linting Requirements
 ```bash
 cd examples/rails_app
-bundle install
-bundle exec rubocop
+docker compose run --rm web bin/rubocop
+```
+
+Or with GitHub Actions format:
+```bash
+cd examples/rails_app
+docker compose run --rm web bin/rubocop -f github
 ```
 
 **Expected Result**: No offenses detected. All code must conform to the project's RuboCop style guidelines.
@@ -286,13 +299,13 @@ bundle exec rubocop
 ### Testing Requirements
 ```bash
 cd examples/rails_app
-bundle install
 
-# Tests require PostgreSQL
-export RAILS_ENV=test
-export DATABASE_URL="postgresql://postgres:postgres@localhost:5432/rails_app_test"
-bin/rails db:create db:migrate
-bin/rspec
+# Start database service
+docker compose up -d db
+
+# Run tests in test environment
+docker compose run --rm -e RAILS_ENV=test -e DATABASE_URL="postgresql://postgres:postgres@db:5432/rails_app_test" web bin/rails db:create db:prepare
+docker compose run --rm -e RAILS_ENV=test -e DATABASE_URL="postgresql://postgres:postgres@db:5432/rails_app_test" web bin/rspec --format documentation
 ```
 
 **Expected Result**: All specs passing. Tests cover:
@@ -310,12 +323,35 @@ The `rails-app-ci.yml` workflow automatically validates:
 **All jobs must pass** for pull requests affecting the `examples/rails_app/` directory.
 
 ### Required Dependencies
-- Ruby 3.2.9 (specified in `.ruby-version`)
-- PostgreSQL 15+ (for tests)
+- Docker and Docker Compose (required for running the application)
+- Ruby 3.2.9 (specified in `.ruby-version`, used in Docker container)
+- PostgreSQL 15+ (provided by Docker Compose `db` service)
 - All gems in `Gemfile` including:
   - `rspec-rails` for testing
   - `rubocop-rspec` for RSpec-specific linting
   - `rswag` gems for API documentation
+
+### Running Commands via Docker Compose
+
+All Rails commands should be executed through Docker Compose:
+```bash
+cd examples/rails_app
+
+# Lint
+docker compose run --rm web bin/rubocop
+
+# Security scan
+docker compose run --rm web bin/brakeman --no-pager
+
+# Routes check
+docker compose run --rm web bin/rails routes | grep health
+
+# Database setup (test environment)
+docker compose run --rm -e RAILS_ENV=test -e DATABASE_URL="postgresql://postgres:postgres@db:5432/rails_app_test" web bin/rails db:create db:prepare
+
+# Run tests
+docker compose run --rm -e RAILS_ENV=test -e DATABASE_URL="postgresql://postgres:postgres@db:5432/rails_app_test" web bin/rspec
+```
 
 ---
 

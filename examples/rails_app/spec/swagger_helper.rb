@@ -36,7 +36,7 @@ RSpec.configure do |config|
             properties: {
               error: { type: :string }
             },
-            required: ['error']
+            required: [ "error" ]
           }
         }
       }

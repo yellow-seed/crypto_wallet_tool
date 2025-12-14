@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  mount Rswag::Ui::Engine => '/api-docs'
-  mount Rswag::Api::Engine => '/api-docs'
+  mount Rswag::Ui::Engine => "/api-docs"
+  mount Rswag::Api::Engine => "/api-docs"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   # API routes
   namespace :api do
     get "health", to: "health#index"
-    
+
     namespace :v1 do
       # Converter endpoints
       namespace :converter do
@@ -21,7 +21,7 @@ Rails.application.routes.draw do
         post :snake_case
         post :camel_case
       end
-      
+
       # Ethereum endpoints
       namespace :ethereum do
         post :transaction
@@ -29,7 +29,7 @@ Rails.application.routes.draw do
         post :block_number
         post :call
       end
-      
+
       # Debug endpoints
       namespace :debug do
         post :transaction

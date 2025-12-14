@@ -39,11 +39,17 @@ class Api::V1::EthereumController < ApplicationController
 
   # POST /api/v1/ethereum/call
   def call
-    call_params = params.require(:call).permit(:to, :from, :data, :gas, :gasPrice, :value)
-    block = params[:block] || 'latest'
-    
+    call_params = if params[:call].present?
+                    params.require(:call).permit(:to, :from, :data, :gas, :gasPrice, :value)
+                  else
+                    params.permit(:to, :from, :data, :gas, :gasPrice, :value)
+                  end
+    block = params[:block] || "latest"
+
     result = @client.eth_call(call_params.to_h, block)
     render json: { result: result }
+  rescue ActionController::ParameterMissing => e
+    render json: { error: e.message }, status: :bad_request
   rescue CryptoWalletTool::RPCError => e
     render json: { error: e.message, code: e.code }, status: :bad_gateway
   rescue StandardError => e
@@ -53,11 +59,11 @@ class Api::V1::EthereumController < ApplicationController
   private
 
   def initialize_client
-    rpc_url = ENV.fetch('ETHEREUM_RPC_URL', nil)
-    
+    rpc_url = ENV.fetch("ETHEREUM_RPC_URL", nil)
+
     if rpc_url.nil? || rpc_url.empty?
-      render json: { 
-        error: 'ETHEREUM_RPC_URL environment variable is not set. Please configure an Ethereum RPC endpoint.' 
+      render json: {
+        error: "ETHEREUM_RPC_URL environment variable is not set. Please configure an Ethereum RPC endpoint."
       }, status: :service_unavailable
       return
     end

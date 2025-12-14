@@ -4,6 +4,8 @@ class Api::V1::ConverterController < ApplicationController
     text = params.require(:text)
     result = CryptoWalletTool::Converter.to_uppercase(text)
     render json: { input: text, output: result }
+  rescue ActionController::ParameterMissing => e
+    render json: { error: e.message }, status: :bad_request
   rescue ArgumentError => e
     render json: { error: e.message }, status: :bad_request
   rescue StandardError => e
@@ -15,6 +17,8 @@ class Api::V1::ConverterController < ApplicationController
     text = params.require(:text)
     result = CryptoWalletTool::Converter.to_lowercase(text)
     render json: { input: text, output: result }
+  rescue ActionController::ParameterMissing => e
+    render json: { error: e.message }, status: :bad_request
   rescue ArgumentError => e
     render json: { error: e.message }, status: :bad_request
   rescue StandardError => e
@@ -26,6 +30,8 @@ class Api::V1::ConverterController < ApplicationController
     text = params.require(:text)
     result = CryptoWalletTool::Converter.reverse(text)
     render json: { input: text, output: result }
+  rescue ActionController::ParameterMissing => e
+    render json: { error: e.message }, status: :bad_request
   rescue ArgumentError => e
     render json: { error: e.message }, status: :bad_request
   rescue StandardError => e
@@ -37,6 +43,8 @@ class Api::V1::ConverterController < ApplicationController
     text = params.require(:text)
     result = CryptoWalletTool::Converter.to_title_case(text)
     render json: { input: text, output: result }
+  rescue ActionController::ParameterMissing => e
+    render json: { error: e.message }, status: :bad_request
   rescue ArgumentError => e
     render json: { error: e.message }, status: :bad_request
   rescue StandardError => e
@@ -48,6 +56,8 @@ class Api::V1::ConverterController < ApplicationController
     text = params.require(:text)
     result = CryptoWalletTool::Converter.to_snake_case(text)
     render json: { input: text, output: result }
+  rescue ActionController::ParameterMissing => e
+    render json: { error: e.message }, status: :bad_request
   rescue ArgumentError => e
     render json: { error: e.message }, status: :bad_request
   rescue StandardError => e
@@ -59,6 +69,8 @@ class Api::V1::ConverterController < ApplicationController
     text = params.require(:text)
     result = CryptoWalletTool::Converter.to_camel_case(text)
     render json: { input: text, output: result }
+  rescue ActionController::ParameterMissing => e
+    render json: { error: e.message }, status: :bad_request
   rescue ArgumentError => e
     render json: { error: e.message }, status: :bad_request
   rescue StandardError => e

@@ -4,10 +4,10 @@ class Api::V1::DebugController < ApplicationController
   # POST /api/v1/debug/transaction
   def transaction
     tx_hash = params.require(:transaction_hash)
-    
+
     fetcher = CryptoWalletTool::TransactionDebugger::Fetcher.new(client: @client)
     transaction = fetcher.fetch_transaction(tx_hash)
-    
+
     render json: {
       hash: transaction.hash,
       from: transaction.from,
@@ -29,10 +29,10 @@ class Api::V1::DebugController < ApplicationController
   # POST /api/v1/debug/receipt
   def receipt
     tx_hash = params.require(:transaction_hash)
-    
+
     fetcher = CryptoWalletTool::TransactionDebugger::Fetcher.new(client: @client)
     receipt = fetcher.fetch_receipt(tx_hash)
-    
+
     render json: {
       transaction_hash: receipt.transaction_hash,
       status: receipt.status,
@@ -53,11 +53,11 @@ class Api::V1::DebugController < ApplicationController
   private
 
   def initialize_client
-    rpc_url = ENV.fetch('ETHEREUM_RPC_URL', nil)
-    
+    rpc_url = ENV.fetch("ETHEREUM_RPC_URL", nil)
+
     if rpc_url.nil? || rpc_url.empty?
-      render json: { 
-        error: 'ETHEREUM_RPC_URL environment variable is not set. Please configure an Ethereum RPC endpoint.' 
+      render json: {
+        error: "ETHEREUM_RPC_URL environment variable is not set. Please configure an Ethereum RPC endpoint."
       }, status: :service_unavailable
       return
     end
