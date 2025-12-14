@@ -10,13 +10,13 @@ RSpec.describe 'api/v1/converter', type: :request do
 
       response(200, 'successful') do
         let(:text) { 'hello world' }
-        
+
         schema type: :object,
           properties: {
             input: { type: :string },
             output: { type: :string }
           },
-          required: ['input', 'output']
+          required: [ "input", "output" ]
 
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -27,12 +27,12 @@ RSpec.describe 'api/v1/converter', type: :request do
 
       response(400, 'bad request') do
         let(:text) { nil }
-        
+
         schema type: :object,
           properties: {
             error: { type: :string }
           }
-        
+
         run_test!
       end
     end
@@ -47,13 +47,13 @@ RSpec.describe 'api/v1/converter', type: :request do
 
       response(200, 'successful') do
         let(:text) { 'HELLO WORLD' }
-        
+
         schema type: :object,
           properties: {
             input: { type: :string },
             output: { type: :string }
           },
-          required: ['input', 'output']
+          required: [ "input", "output" ]
 
         run_test!
       end
@@ -69,13 +69,13 @@ RSpec.describe 'api/v1/converter', type: :request do
 
       response(200, 'successful') do
         let(:text) { 'hello' }
-        
+
         schema type: :object,
           properties: {
             input: { type: :string },
             output: { type: :string }
           },
-          required: ['input', 'output']
+          required: [ "input", "output" ]
 
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -94,13 +94,13 @@ RSpec.describe 'api/v1/converter', type: :request do
 
       response(200, 'successful') do
         let(:text) { 'hello world' }
-        
+
         schema type: :object,
           properties: {
             input: { type: :string },
             output: { type: :string }
           },
-          required: ['input', 'output']
+          required: [ "input", "output" ]
 
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -119,13 +119,13 @@ RSpec.describe 'api/v1/converter', type: :request do
 
       response(200, 'successful') do
         let(:text) { 'helloWorld' }
-        
+
         schema type: :object,
           properties: {
             input: { type: :string },
             output: { type: :string }
           },
-          required: ['input', 'output']
+          required: [ "input", "output" ]
 
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -144,13 +144,13 @@ RSpec.describe 'api/v1/converter', type: :request do
 
       response(200, 'successful') do
         let(:text) { 'hello_world' }
-        
+
         schema type: :object,
           properties: {
             input: { type: :string },
             output: { type: :string }
           },
-          required: ['input', 'output']
+          required: [ "input", "output" ]
 
         run_test! do |response|
           data = JSON.parse(response.body)

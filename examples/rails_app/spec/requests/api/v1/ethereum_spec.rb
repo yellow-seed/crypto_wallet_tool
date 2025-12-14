@@ -6,13 +6,13 @@ RSpec.describe 'api/v1/ethereum', type: :request do
       tags 'Ethereum'
       consumes 'application/json'
       produces 'application/json'
-      parameter name: :transaction_hash, in: :query, type: :string, required: true, 
+      parameter name: :transaction_hash, in: :query, type: :string, required: true,
                 description: 'Transaction hash (0x-prefixed hex string)',
                 example: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef'
 
       response(200, 'successful') do
         let(:transaction_hash) { '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef' }
-        
+
         schema type: :object,
           properties: {
             hash: { type: :string },
@@ -41,7 +41,7 @@ RSpec.describe 'api/v1/ethereum', type: :request do
 
       response(404, 'transaction not found') do
         let(:transaction_hash) { '0x0000000000000000000000000000000000000000000000000000000000000000' }
-        
+
         schema type: :object,
           properties: {
             error: { type: :string }
@@ -57,7 +57,7 @@ RSpec.describe 'api/v1/ethereum', type: :request do
 
       response(503, 'RPC endpoint not configured') do
         let(:transaction_hash) { '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef' }
-        
+
         schema type: :object,
           properties: {
             error: { type: :string }
@@ -77,12 +77,12 @@ RSpec.describe 'api/v1/ethereum', type: :request do
       tags 'Ethereum'
       consumes 'application/json'
       produces 'application/json'
-      parameter name: :transaction_hash, in: :query, type: :string, required: true, 
+      parameter name: :transaction_hash, in: :query, type: :string, required: true,
                 description: 'Transaction hash (0x-prefixed hex string)'
 
       response(200, 'successful') do
         let(:transaction_hash) { '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef' }
-        
+
         schema type: :object,
           properties: {
             transactionHash: { type: :string },
@@ -107,7 +107,7 @@ RSpec.describe 'api/v1/ethereum', type: :request do
 
       response(404, 'transaction not found') do
         let(:transaction_hash) { '0x0000000000000000000000000000000000000000000000000000000000000000' }
-        
+
         schema type: :object,
           properties: {
             error: { type: :string }
@@ -134,7 +134,7 @@ RSpec.describe 'api/v1/ethereum', type: :request do
           properties: {
             block_number: { type: :integer }
           },
-          required: ['block_number']
+          required: [ "block_number" ]
 
         before do
           allow_any_instance_of(CryptoWalletTool::Client).to receive(:eth_block_number).and_return(12345678)
@@ -176,7 +176,7 @@ RSpec.describe 'api/v1/ethereum', type: :request do
           gasPrice: { type: :string, description: 'Gas price (optional)' },
           value: { type: :string, description: 'Value to send (optional)' }
         },
-        required: ['to']
+        required: [ "to" ]
       }
       parameter name: :block, in: :query, type: :string, required: false,
                 description: 'Block number or tag (latest, earliest, pending)',
@@ -185,7 +185,7 @@ RSpec.describe 'api/v1/ethereum', type: :request do
       response(200, 'successful') do
         let(:call) { { to: '0x1234567890123456789012345678901234567890', data: '0x' } }
         let(:block) { 'latest' }
-        
+
         schema type: :object,
           properties: {
             result: { type: :string }

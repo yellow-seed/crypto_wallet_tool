@@ -6,13 +6,13 @@ RSpec.describe 'api/v1/debug', type: :request do
       tags 'Transaction Debugger'
       consumes 'application/json'
       produces 'application/json'
-      parameter name: :transaction_hash, in: :query, type: :string, required: true, 
+      parameter name: :transaction_hash, in: :query, type: :string, required: true,
                 description: 'Transaction hash (0x-prefixed hex string)',
                 example: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef'
 
       response(200, 'successful') do
         let(:transaction_hash) { '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef' }
-        
+
         schema type: :object,
           properties: {
             hash: { type: :string },
@@ -24,7 +24,7 @@ RSpec.describe 'api/v1/debug', type: :request do
             eip1559: { type: :boolean },
             raw_data: { type: :object }
           },
-          required: ['hash', 'from', 'to', 'value', 'gas', 'gas_price', 'eip1559']
+          required: [ "hash", "from", "to", "value", "gas", "gas_price", "eip1559" ]
 
         before do
           tx_data = {
@@ -49,7 +49,7 @@ RSpec.describe 'api/v1/debug', type: :request do
 
       response(404, 'transaction not found') do
         let(:transaction_hash) { '0x0000000000000000000000000000000000000000000000000000000000000000' }
-        
+
         schema type: :object,
           properties: {
             error: { type: :string }
@@ -66,7 +66,7 @@ RSpec.describe 'api/v1/debug', type: :request do
 
       response(503, 'RPC endpoint not configured') do
         let(:transaction_hash) { '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef' }
-        
+
         schema type: :object,
           properties: {
             error: { type: :string }
@@ -86,12 +86,12 @@ RSpec.describe 'api/v1/debug', type: :request do
       tags 'Transaction Debugger'
       consumes 'application/json'
       produces 'application/json'
-      parameter name: :transaction_hash, in: :query, type: :string, required: true, 
+      parameter name: :transaction_hash, in: :query, type: :string, required: true,
                 description: 'Transaction hash (0x-prefixed hex string)'
 
       response(200, 'successful') do
         let(:transaction_hash) { '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef' }
-        
+
         schema type: :object,
           properties: {
             transaction_hash: { type: :string },
@@ -102,7 +102,7 @@ RSpec.describe 'api/v1/debug', type: :request do
             gas_used: { type: :integer },
             raw_data: { type: :object }
           },
-          required: ['transaction_hash', 'status', 'success', 'failed', 'block_number', 'gas_used']
+          required: [ "transaction_hash", "status", "success", "failed", "block_number", "gas_used" ]
 
         before do
           receipt_data = {
@@ -119,7 +119,7 @@ RSpec.describe 'api/v1/debug', type: :request do
         run_test! do |response|
           data = JSON.parse(response.body)
           expect(data['transaction_hash']).to eq(transaction_hash)
-          expect(data['status']).to be_in(['success', 'failed', 'unknown'])
+          expect(data['status']).to be_in([ "success", "failed", "unknown" ])
           expect(data).to have_key('success')
           expect(data).to have_key('failed')
         end
@@ -127,7 +127,7 @@ RSpec.describe 'api/v1/debug', type: :request do
 
       response(404, 'transaction not found') do
         let(:transaction_hash) { '0x0000000000000000000000000000000000000000000000000000000000000000' }
-        
+
         schema type: :object,
           properties: {
             error: { type: :string }
