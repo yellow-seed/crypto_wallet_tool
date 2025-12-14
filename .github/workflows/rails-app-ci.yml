@@ -71,3 +71,50 @@ jobs:
 
       - name: Verify routes are configured
         run: bin/rails routes | grep health
+
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: examples/rails_app
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: rails_app_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      RAILS_ENV: test
+      DB_HOST: localhost
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/rails_app_test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version-file: examples/rails_app/.ruby-version
+          bundler-cache: true
+          working-directory: examples/rails_app
+
+      - name: Set up database
+        run: |
+          bin/rails db:create
+          bin/rails db:migrate
+
+      - name: Run RSpec tests
+        run: bin/rspec --format documentation
