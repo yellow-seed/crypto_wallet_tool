@@ -82,6 +82,7 @@ jobs:
       postgres:
         image: postgres:15
         env:
+          # Test database credentials (ephemeral, CI-only)
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: rails_app_test
@@ -95,6 +96,7 @@ jobs:
 
     env:
       RAILS_ENV: test
+      # Database connection for ephemeral test environment
       DB_HOST: localhost
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
