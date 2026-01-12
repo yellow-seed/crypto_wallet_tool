@@ -28,6 +28,26 @@ bundle exec rspec
 bundle exec rubocop
 ```
 
+### Claude Code での GitHub CLI (gh) のセットアップ
+
+Claude Code on the Web などのリモート環境で GitHub CLI (`gh`) コマンドを使用する場合は、以下のhookスクリプトを実行してください：
+
+```bash
+bash .claude/hooks/gh-setup.sh
+```
+
+### リモート環境での gh コマンド使用方法
+
+gitのremoteがローカルプロキシを経由している環境では、`gh` コマンドがリポジトリを自動認識できない場合があります。その場合は以下の方法を使用してください：
+
+**方法: `-R` フラグでリポジトリを明示的に指定**
+
+```bash
+gh issue list -R yellow-seed/crypto_wallet_tool
+gh pr view 123 -R yellow-seed/crypto_wallet_tool
+gh issue create -R yellow-seed/crypto_wallet_tool --title "タイトル" --body "本文"
+```
+
 ## Code Style and Standards
 
 ### Ruby Conventions
