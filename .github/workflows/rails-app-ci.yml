@@ -25,7 +25,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version-file: examples/rails_app/.ruby-version
+          ruby-version: '3.2.9'
           bundler-cache: true
           working-directory: examples/rails_app
 
@@ -45,7 +45,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version-file: examples/rails_app/.ruby-version
+          ruby-version: '3.2.9'
           bundler-cache: true
           working-directory: examples/rails_app
 
@@ -65,7 +65,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version-file: examples/rails_app/.ruby-version
+          ruby-version: '3.2.9'
           bundler-cache: true
           working-directory: examples/rails_app
 
