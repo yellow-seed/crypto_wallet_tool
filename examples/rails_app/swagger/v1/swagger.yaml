@@ -1,0 +1,13 @@
+openapi: 3.0.1
+info:
+  title: RailsApp API
+  version: v1
+servers:
+  - url: http://localhost:3000
+paths:
+  /api/health:
+    get:
+      summary: Health check
+      responses:
+        "200":
+          description: OK
