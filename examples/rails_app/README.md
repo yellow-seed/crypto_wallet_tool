@@ -62,6 +62,7 @@ bin/rails server
 
 - Health Check API: http://localhost:3000/api/health
 - Rails Health Check: http://localhost:3000/up
+- Swagger UI: http://localhost:3000/api-docs
 
 ### 動作確認
 
@@ -83,6 +84,18 @@ Health Check APIエンドポイントは、以下の情報を返します：
 - Railsアプリケーションが正常に起動している
 - PostgreSQLデータベースに接続できている
 - crypto_wallet_tool Gemが正しく読み込まれている
+
+## Ethereum RPC API
+
+Ethereum JSON-RPC をラップしたAPIは、以下のエンドポイントで利用できます：
+
+- `POST /api/v1/ethereum/transaction` - トランザクション取得
+- `POST /api/v1/ethereum/block` - ブロック取得
+- `POST /api/v1/ethereum/balance` - 残高取得
+- `POST /api/v1/ethereum/block_number` - 最新ブロック番号取得
+- `POST /api/v1/ethereum/call` - eth_call 実行
+
+RPCエンドポイントは環境変数 `ETHEREUM_RPC_URL` で指定します（未指定時は `http://localhost:8545` を使用）。
 
 ## 開発コマンド
 
@@ -204,4 +217,3 @@ docker compose up --build
 - [crypto_wallet_tool README](../../README.md)
 - [Rails Guides](https://guides.rubyonrails.org/)
 - [Docker Documentation](https://docs.docker.com/)
-

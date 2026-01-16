@@ -11,3 +11,119 @@ paths:
       responses:
         "200":
           description: OK
+  /api/v1/ethereum/transaction:
+    post:
+      summary: Get Ethereum transaction by hash
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - tx_hash
+              properties:
+                tx_hash:
+                  type: string
+                  description: Transaction hash (0x-prefixed)
+            example:
+              tx_hash: "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
+      responses:
+        "200":
+          description: Transaction data
+        "400":
+          description: Missing parameter
+        "404":
+          description: Transaction not found
+        "502":
+          description: RPC error
+  /api/v1/ethereum/block:
+    post:
+      summary: Get Ethereum block by number or tag
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                block_number:
+                  type: string
+                  description: Block number (hex) or tag (latest)
+                full_transactions:
+                  type: boolean
+                  description: Include full transaction objects
+            example:
+              block_number: "latest"
+              full_transactions: false
+      responses:
+        "200":
+          description: Block data
+        "502":
+          description: RPC error
+  /api/v1/ethereum/balance:
+    post:
+      summary: Get Ethereum address balance
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - address
+              properties:
+                address:
+                  type: string
+                  description: Address to query (0x-prefixed)
+                block:
+                  type: string
+                  description: Block number or tag
+            example:
+              address: "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"
+              block: "latest"
+      responses:
+        "200":
+          description: Balance data
+        "400":
+          description: Missing parameter
+        "502":
+          description: RPC error
+  /api/v1/ethereum/block_number:
+    post:
+      summary: Get current Ethereum block number
+      responses:
+        "200":
+          description: Current block number
+        "502":
+          description: RPC error
+  /api/v1/ethereum/call:
+    post:
+      summary: Execute eth_call with parameters
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - call
+              properties:
+                call:
+                  type: object
+                  description: Call parameters (to, data, etc.)
+                block:
+                  type: string
+                  description: Block number or tag
+            example:
+              call:
+                to: "0x1234567890abcdef1234567890abcdef12345678"
+                data: "0xabcdef"
+              block: "latest"
+      responses:
+        "200":
+          description: Call result
+        "400":
+          description: Missing parameter
+        "502":
+          description: RPC error

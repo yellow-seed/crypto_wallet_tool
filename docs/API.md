@@ -264,6 +264,51 @@ tx = client.eth_get_transaction_by_hash('0x1234...')
 
 ### ブロックチェーン情報メソッド
 
+#### `Client#eth_get_block_by_number(block_number, full_transactions = false)`
+
+ブロック番号またはタグからブロック情報を取得します。
+
+```ruby
+client = CryptoWalletTool::Client.new('http://localhost:8545')
+block = client.eth_get_block_by_number('latest')
+# => { 'number' => '0x10', 'hash' => '0xabc...', ... }
+
+block = client.eth_get_block_by_number(16, true)
+# => { 'number' => '0x10', 'transactions' => [{...}], ... }
+```
+
+**パラメータ:**
+- `block_number` (Integer, String) - ブロック番号（整数または0x付き）またはタグ（latest など）
+- `full_transactions` (Boolean) - トランザクション詳細を含めるか（デフォルト: false）
+
+**戻り値:** Hash - ブロックデータ
+
+**例外:**
+- `RPCError` - RPC呼び出しエラー
+
+---
+
+#### `Client#eth_get_balance(address, block = 'latest')`
+
+アドレスの残高を取得します。
+
+```ruby
+client = CryptoWalletTool::Client.new('http://localhost:8545')
+balance = client.eth_get_balance('0xabcdefabcdefabcdefabcdefabcdefabcdefabcd')
+# => "0x1234"
+```
+
+**パラメータ:**
+- `address` (String) - 残高を取得するアドレス（0x接頭辞付き）
+- `block` (String) - ブロック番号またはタグ（デフォルト: 'latest'）
+
+**戻り値:** String - wei単位の残高（16進数文字列）
+
+**例外:**
+- `RPCError` - RPC呼び出しエラー
+
+---
+
 #### `Client#eth_block_number`
 
 現在のブロック番号を取得します。
