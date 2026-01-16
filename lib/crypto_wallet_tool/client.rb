@@ -72,7 +72,7 @@ module CryptoWalletTool
     # @param block_number [Integer, String] Block number (integer or 0x hex) or tag (latest, earliest, pending)
     # @param full_transactions [Boolean] Whether to return full transaction objects
     # @return [Hash] Block data
-    def eth_get_block_by_number(block_number, full_transactions = false)
+    def eth_get_block_by_number(block_number, full_transactions: false)
       normalized_block_number = normalize_block_number(block_number)
       rpc_call('eth_getBlockByNumber', [normalized_block_number, full_transactions])
     end

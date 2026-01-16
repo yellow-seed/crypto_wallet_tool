@@ -264,7 +264,7 @@ tx = client.eth_get_transaction_by_hash('0x1234...')
 
 ### ブロックチェーン情報メソッド
 
-#### `Client#eth_get_block_by_number(block_number, full_transactions = false)`
+#### `Client#eth_get_block_by_number(block_number, full_transactions: false)`
 
 ブロック番号またはタグからブロック情報を取得します。
 
@@ -273,7 +273,7 @@ client = CryptoWalletTool::Client.new('http://localhost:8545')
 block = client.eth_get_block_by_number('latest')
 # => { 'number' => '0x10', 'hash' => '0xabc...', ... }
 
-block = client.eth_get_block_by_number(16, true)
+block = client.eth_get_block_by_number(16, full_transactions: true)
 # => { 'number' => '0x10', 'transactions' => [{...}], ... }
 ```
 

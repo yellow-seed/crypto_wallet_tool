@@ -17,7 +17,7 @@ class Api::V1::EthereumController < ApplicationController
   def block
     block_number = params.fetch(:block_number, "latest")
     full_transactions = ActiveModel::Type::Boolean.new.cast(params.fetch(:full_transactions, false))
-    block = client.eth_get_block_by_number(block_number, full_transactions)
+    block = client.eth_get_block_by_number(block_number, full_transactions: full_transactions)
 
     render json: { block: block }
   rescue CryptoWalletTool::RPCError => e

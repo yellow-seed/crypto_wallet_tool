@@ -140,7 +140,7 @@ RSpec.describe CryptoWalletTool::Client do
       end
 
       it 'returns block data for the specified tag' do
-        expect(client.eth_get_block_by_number('latest', true)).to eq(block_data)
+        expect(client.eth_get_block_by_number('latest', full_transactions: true)).to eq(block_data)
       end
     end
   end
