@@ -68,6 +68,23 @@ module CryptoWalletTool
       hex_result.to_i(16)
     end
 
+    # Get block details by block number or tag
+    # @param block_number [Integer, String] Block number (integer or 0x hex) or tag (latest, earliest, pending)
+    # @param full_transactions [Boolean] Whether to return full transaction objects
+    # @return [Hash] Block data
+    def eth_get_block_by_number(block_number, full_transactions: false)
+      normalized_block_number = normalize_block_number(block_number)
+      rpc_call('eth_getBlockByNumber', [normalized_block_number, full_transactions])
+    end
+
+    # Get the balance of an address
+    # @param address [String] Address to query (0x-prefixed hex string)
+    # @param block [String] Block number or tag (default: 'latest')
+    # @return [String] Balance in wei as a hex string
+    def eth_get_balance(address, block = 'latest')
+      rpc_call('eth_getBalance', [address, block])
+    end
+
     private
 
     # Make a JSON-RPC 2.0 call
@@ -112,6 +129,15 @@ module CryptoWalletTool
     # @return [Integer] Request ID
     def generate_id
       (Time.now.to_f * 1000).to_i
+    end
+
+    # Normalize block number input for JSON-RPC calls
+    # @param block_number [Integer, String] Block number or tag
+    # @return [String] Normalized block number or tag
+    def normalize_block_number(block_number)
+      return "0x#{block_number.to_s(16)}" if block_number.is_a?(Integer)
+
+      block_number
     end
   end
 end

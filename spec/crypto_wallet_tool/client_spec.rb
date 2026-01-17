@@ -115,6 +115,49 @@ RSpec.describe CryptoWalletTool::Client do
     end
   end
 
+  describe '#eth_get_block_by_number' do
+    let(:block_data) do
+      {
+        'number' => '0x10',
+        'hash' => '0xabc',
+        'transactions' => []
+      }
+    end
+
+    context 'when block number is an integer' do
+      before do
+        stub_rpc_request('eth_getBlockByNumber', ['0x10', false], block_data)
+      end
+
+      it 'normalizes the block number and returns block data' do
+        expect(client.eth_get_block_by_number(16)).to eq(block_data)
+      end
+    end
+
+    context 'when block number is a tag' do
+      before do
+        stub_rpc_request('eth_getBlockByNumber', ['latest', true], block_data)
+      end
+
+      it 'returns block data for the specified tag' do
+        expect(client.eth_get_block_by_number('latest', full_transactions: true)).to eq(block_data)
+      end
+    end
+  end
+
+  describe '#eth_get_balance' do
+    let(:address) { '0xabcdefabcdefabcdefabcdefabcdefabcdefabcd' }
+    let(:balance) { '0x1234' }
+
+    before do
+      stub_rpc_request('eth_getBalance', [address, 'latest'], balance)
+    end
+
+    it 'returns the balance in wei' do
+      expect(client.eth_get_balance(address)).to eq(balance)
+    end
+  end
+
   describe 'error handling' do
     context 'when RPC returns an error' do
       before do

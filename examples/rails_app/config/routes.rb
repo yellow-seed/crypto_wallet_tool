@@ -11,6 +11,16 @@ Rails.application.routes.draw do
   # API routes
   namespace :api do
     get "health", to: "health#index"
+
+    namespace :v1 do
+      scope :ethereum, controller: :ethereum do
+        post "transaction", action: :transaction
+        post "block", action: :block
+        post "balance", action: :balance
+        post "block_number", action: :block_number
+        post "call", action: :call
+      end
+    end
   end
 
   # Defines the root path route ("/")
