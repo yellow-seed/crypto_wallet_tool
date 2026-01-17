@@ -1,8 +1,0 @@
-blank_issues_enabled: false
-contact_links:
-  - name: ディスカッション
-    url: https://github.com/yellow-seed/crypto_wallet_tool/discussions
-    about: 一般的な質問やディスカッションはこちらで行ってください
-  - name: セキュリティ脆弱性の報告
-    url: https://github.com/yellow-seed/crypto_wallet_tool/security
-    about: セキュリティに関する問題はこちらで非公開に報告してください

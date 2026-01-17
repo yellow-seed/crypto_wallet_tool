@@ -1,32 +1,31 @@
 name: バグレポート
-description: バグや問題を報告する
-title: "[BUG] "
+description: 改善のためのバグ報告を作成する
+title: "[Bug] "
 labels: ["bug"]
 body:
   - type: markdown
     attributes:
       value: |
-        バグレポートを作成していただきありがとうございます。
-        以下のフォームに必要な情報を記入してください。
+        バグレポートを作成いただきありがとうございます！
 
   - type: textarea
     id: description
     attributes:
-      label: バグの説明
+      label: 説明
       description: バグの内容を明確かつ簡潔に説明してください。
-      placeholder: 何が問題なのかを説明してください
+      placeholder: バグの内容を記述してください...
     validations:
       required: true
 
   - type: textarea
-    id: reproduction
+    id: steps
     attributes:
       label: 再現手順
-      description: バグを再現するための手順を記載してください。
+      description: 動作を再現するための手順
       placeholder: |
-        1. '...'にアクセス
-        2. '...'をクリック
-        3. '...'までスクロール
+        1. '...' に移動
+        2. '....' をクリック
+        3. '....' までスクロール
         4. エラーを確認
     validations:
       required: true
@@ -35,8 +34,8 @@ body:
     id: expected
     attributes:
       label: 期待される動作
-      description: 期待される動作を説明してください。
-      placeholder: 何が起こるべきだったのかを説明してください
+      description: 期待していた動作を明確かつ簡潔に説明してください。
+      placeholder: どのような動作を期待していましたか？
     validations:
       required: true
 
@@ -44,24 +43,27 @@ body:
     id: actual
     attributes:
       label: 実際の動作
-      description: 実際に何が起こったかを説明してください。
-      placeholder: 実際に何が起こったのかを説明してください
+      description: 実際に起こった動作を明確かつ簡潔に説明してください。
+      placeholder: 実際にはどうなりましたか？
     validations:
       required: true
 
   - type: textarea
+    id: screenshots
+    attributes:
+      label: スクリーンショット
+      description: 該当する場合は、問題の説明に役立つスクリーンショットを追加してください。
+      placeholder: スクリーンショットをここに追加
+
+  - type: dropdown
     id: environment
     attributes:
-      label: 環境情報
-      description: バグが発生した環境の詳細を記載してください。
-      placeholder: |
-        - OS: [例: macOS 14.0]
-        - Rubyバージョン: [例: 3.2.0]
-        - Gemバージョン: [例: 1.0.0]
-      value: |
-        - OS: 
-        - Rubyバージョン: 
-        - Gemバージョン: 
+      label: 環境
+      description: 環境を選択してください
+      options:
+        - Development
+        - Staging
+        - Production
     validations:
       required: true
 
@@ -69,21 +71,6 @@ body:
     id: additional
     attributes:
       label: 追加情報
-      description: |
-        その他、スクリーンショット、ログ、またはこの問題に関連する情報があれば記載してください。
-      placeholder: スクリーンショットやログを貼り付けてください
-    validations:
-      required: false
+      description: 問題に関するその他の情報をここに追加してください。
+      placeholder: 追加情報があれば記載してください...
 
-  - type: textarea
-    id: code-sample
-    attributes:
-      label: コードサンプル
-      description: 問題を再現できる最小限のコードサンプルを提供してください。
-      placeholder: |
-        ```ruby
-        # ここにコードを記載
-        ```
-      render: ruby
-    validations:
-      required: false
